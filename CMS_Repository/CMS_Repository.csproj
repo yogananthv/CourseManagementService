@@ -6,4 +6,8 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\CMS_DataAcess\CMS_DataAccess.csproj" />
+  </ItemGroup>
+
 </Project>

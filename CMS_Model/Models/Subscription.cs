@@ -14,10 +14,13 @@ namespace CMS_Model.Models
         public int Id { get; set; }
 
         [Required]
-        public int UserId { get; set; }
+        public string UserId { get; set; }
+
+        [Required]
+        public string Company { get; set; }
 
         [ForeignKey("Training")]
-        public string TrainingId { get; set; }
+        public int TrainingId { get; set; }
 
         public Training Training { get; set; }
 

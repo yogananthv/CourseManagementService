@@ -20,7 +20,7 @@ namespace CMS_Model.Models
         public string Code { get; set; }
 
         [ForeignKey("Course")]
-        public string CourseId { get; set; }
+        public int CourseId { get; set; }
 
         public Course Course { get; set; }
 
