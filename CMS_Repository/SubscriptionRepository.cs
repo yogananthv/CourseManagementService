@@ -1,45 +1,87 @@
-﻿using CMS_DataAccess.Data;
+﻿using AutoMapper;
+using CMS_DataAccess.Data;
+using CMS_Model.DTO;
 using CMS_Model.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 
 namespace CMS_Repository
 {
     public class SubscriptionRepository : ISubscriptionRepository
     {
         private readonly ApplicationDbContext dbContext;
+        private readonly IMapper mapper;
 
-        public SubscriptionRepository(ApplicationDbContext _dbContext)
+        public SubscriptionRepository(ApplicationDbContext _dbContext, IMapper mapper)
         {
             dbContext = _dbContext;
+            this.mapper = mapper;
         }
 
-        public async Task<Subscription> ISubscriptionRepository.CreateAsync(Subscription sub)
+        async Task<SubscriptionDto> ISubscriptionRepository.CreateAsync(SubscriptionDto subscriptionDto)
         {
-            throw new NotImplementedException();
+            var subscription = mapper.Map<Subscription>(subscriptionDto);
+            await dbContext.Subscriptions.AddAsync(subscription);
+            await dbContext.SaveChangesAsync();
+            return subscriptionDto;
         }
 
-        public async Task<Subscription?> ISubscriptionRepository.DeleteAsync(int id)
+        async Task<List<SubscriptionDto>> ISubscriptionRepository.GetAllSubscriptionsAsync(int pageNumber = 1, int pageSize = 100, string trainingCode = "", string trainingName = "", string month = "")
         {
-            throw new NotImplementedException();
+            trainingCode = string.IsNullOrEmpty(trainingCode) ? "" : trainingCode;
+            trainingName = string.IsNullOrEmpty(trainingName) ? "" : trainingName;
+            month = string.IsNullOrEmpty(month) ? "" : month;
+
+            var item = await(
+                        from s in dbContext.Subscriptions
+                        join t in dbContext.Trainings on s.TrainingId equals t.Id
+                        where (trainingCode == "" || t.Code.ToLower() == trainingCode.ToLower()) && (trainingName == "" || t.Name.ToLower() == trainingName.ToLower()) && (month == "" || t.Month.ToLower() == month.ToLower())
+                        orderby (s.Id)
+                        select new SubscriptionDto
+                        {
+                            Id = t.Id,
+                            TrainingObj = new TrainingDto
+                            {
+                                Code = t.Code,
+                                Name = t.Name,
+                                Month = t.Month
+                            },
+                            Status = t.Status
+                        }).Skip((pageNumber-1) * pageSize).Take(pageSize).ToListAsync();
+
+
+            return item;
         }
 
-        public async Task<List<Subscription>> ISubscriptionRepository.GetAllAsync()
+        async Task<List<SubscriptionDto>> ISubscriptionRepository.GetAllSubscriptionsDetailsAsync(int pageNumber, int pageSize, string trainingCode = "", string trainingName = "", string month = "",
+                                                                                                  string courseCode = "", string courseName = "", string userName = "", string gender = "",string email = "")
         {
-            throw new NotImplementedException();
-        }
-
-        public async Task<Subscription?> ISubscriptionRepository.GetByIdAsync(int id)
-        {
-            throw new NotImplementedException();
-        }
-
-        public async Task<Subscription?> ISubscriptionRepository.UpdateAsync(int id, Subscription sub)
-        {
-            throw new NotImplementedException();
+            var item = await (
+                        from s in dbContext.Subscriptions
+                        join t in dbContext.Trainings on s.TrainingId equals t.Id 
+                        join c in dbContext.Courses on t.CourseId equals c.Id
+                        where (trainingCode == "" || t.Code.ToLower() == trainingCode.ToLower()) && (trainingName == "" || t.Name.ToLower() == trainingName.ToLower()) && (month == "" || t.Month.ToLower() == month.ToLower())
+                               && (courseCode == "" || c.Code.ToLower() == courseCode.ToLower()) && (courseName == "" || c.Name.ToLower() == courseName.ToLower()) && (userName == "" || s.UserName.ToLower() == userName.ToLower())
+                               && (gender == "" || s.Gender.ToLower() == gender.ToLower()) && (email == "" || s.Email.ToLower() == email.ToLower())
+                        select new SubscriptionDto
+                        {
+                            Id = t.Id,
+                            TrainingObj = new TrainingDto
+                            {
+                                Code = t.Code,
+                                Name = t.Name,
+                                Month = t.Month,
+                                CourseObj = new CourseDto
+                                {
+                                    Code = c.Code,
+                                    Name = c.Name
+                                }
+                            },
+                            UserId = s.UserId,
+                            Email = s.Email,
+                            Gender = s.Gender,
+                            Status = t.Status
+                        }).Skip((pageNumber - 1) * pageSize).Take(pageSize).ToListAsync();
+            return item;
         }
     }
 }

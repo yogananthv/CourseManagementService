@@ -1,22 +1,16 @@
-﻿using CMS_Model.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using CMS_Model.DTO;
+using CMS_Model.Models;
 
 namespace CMS_Repository
 {
     public interface ISubscriptionRepository
     {
-        Task<List<Subscription>> GetAllAsync();
+        Task<List<SubscriptionDto>> GetAllSubscriptionsAsync(int pageNumber = 1, int pageSize = 100, string trainingCode = "", string trainingName = "", string month = "");
 
-        Task<Subscription?> GetByIdAsync(int id);
+        Task<List<SubscriptionDto>> GetAllSubscriptionsDetailsAsync(int pageNumber, int pageSize, string trainingCode = "", string trainingName = "", string month = "",
+                                                                    string courseCode = "", string courseName = "", string userName = "", string gender = "", string email = "");
 
-        Task<Subscription> CreateAsync(Subscription sub);
+        Task<SubscriptionDto> CreateAsync(SubscriptionDto sub);
 
-        Task<Subscription?> UpdateAsync(int id, Subscription sub);
-
-        Task<Subscription?> DeleteAsync(int id);
     }
 }

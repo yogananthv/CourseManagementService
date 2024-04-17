@@ -1,10 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace CMS_Model.Models
 {
@@ -18,6 +13,15 @@ namespace CMS_Model.Models
 
         [Required]
         public string Company { get; set; }
+
+        [Required]
+        public string Email { get; set; }
+
+        [Required]
+        public string Gender { get; set; }
+
+        [Required]
+        public string UserName { get; set; }
 
         [ForeignKey("Training")]
         public int TrainingId { get; set; }

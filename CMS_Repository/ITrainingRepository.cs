@@ -1,22 +1,17 @@
-﻿using CMS_Model.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using CMS_Model.DTO;
+using CMS_Model.Models;
 
 namespace CMS_Repository
 {
     public interface ITrainingRepository
     {
-        Task<List<Training>> GetAllAsync();
+        Task<List<TrainingDto>> GetAllAsync();
 
-        Task<Training?> GetByIdAsync(int id);
+        Task<TrainingDto?> GetByIdAsync(int id);
 
-        Task<Training> CreateAsync(Training training);
+        Task<TrainingDto> CreateAsync(TrainingDto training);
 
-        Task<Training?> UpdateAsync(int id, Training training);
+        Task<TrainingDto?> UpdateAsync(int id, TrainingDto training);
 
-        Task<Training?> DeleteAsync(int id);
     }
 }
