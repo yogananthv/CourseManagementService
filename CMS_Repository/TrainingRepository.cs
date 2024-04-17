@@ -48,34 +48,34 @@ namespace CMS_Repository
             return item;
         }
 
-        async Task<TrainingDto?> ITrainingRepository.GetByIdAsync(int id)
-        {
-            var item = await (
-                       from t in dbContext.Trainings
-                       join c in dbContext.Courses on t.CourseId equals c.Id
-                       where t.Id == id 
-                       select new TrainingDto
-                       {
-                           Id = t.Id,
-                           Code = t.Code,
-                           CourseObj = new CourseDto
-                           {
-                               Code = c.Code,
-                               Description = c.Description,
-                               Name = c.Name,
-                               Title = c.Title
-                           },
-                           CourseId = c.Id,
-                           Month = t.Month,
-                           Name = t.Name,
-                           Status = t.Status
-                       }).FirstOrDefaultAsync();
-            return item;
-        }
+        //async Task<TrainingDto?> ITrainingRepository.GetByIdAsync(int id)
+        //{
+        //    var item = await (
+        //               from t in dbContext.Trainings
+        //               join c in dbContext.Courses on t.CourseId equals c.Id
+        //               where t.Id == id 
+        //               select new TrainingDto
+        //               {
+        //                   Id = t.Id,
+        //                   Code = t.Code,
+        //                   CourseObj = new CourseDto
+        //                   {
+        //                       Code = c.Code,
+        //                       Description = c.Description,
+        //                       Name = c.Name,
+        //                       Title = c.Title
+        //                   },
+        //                   CourseId = c.Id,
+        //                   Month = t.Month,
+        //                   Name = t.Name,
+        //                   Status = t.Status
+        //               }).FirstOrDefaultAsync();
+        //    return item;
+        //}
 
-        async Task<TrainingDto?> ITrainingRepository.UpdateAsync(int id, TrainingDto training)
+        async Task<TrainingDto?> ITrainingRepository.UpdateAsync(TrainingDto training)
         {
-            var existingTraining = await dbContext.Trainings.FirstOrDefaultAsync(x => x.Id == id);
+            var existingTraining = await dbContext.Trainings.FirstOrDefaultAsync(x => x.Id == training.Id);
 
             if (existingTraining == null)
             {

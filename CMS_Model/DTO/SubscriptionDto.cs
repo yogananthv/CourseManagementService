@@ -18,6 +18,8 @@ namespace CMS_Model.DTO
 
         public string Status { get; set; }
 
+        public int TrainingId { get; set; }
+
         public TrainingDto TrainingObj { get; set; }
 
        

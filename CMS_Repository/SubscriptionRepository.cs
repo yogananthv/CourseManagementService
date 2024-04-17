@@ -38,14 +38,14 @@ namespace CMS_Repository
                         orderby (s.Id)
                         select new SubscriptionDto
                         {
-                            Id = t.Id,
+                            Id = s.Id,
                             TrainingObj = new TrainingDto
                             {
                                 Code = t.Code,
                                 Name = t.Name,
                                 Month = t.Month
                             },
-                            Status = t.Status
+                            Status = s.Status
                         }).Skip((pageNumber-1) * pageSize).Take(pageSize).ToListAsync();
 
 
@@ -55,6 +55,15 @@ namespace CMS_Repository
         async Task<List<SubscriptionDto>> ISubscriptionRepository.GetAllSubscriptionsDetailsAsync(int pageNumber, int pageSize, string trainingCode = "", string trainingName = "", string month = "",
                                                                                                   string courseCode = "", string courseName = "", string userName = "", string gender = "",string email = "")
         {
+            trainingCode = string.IsNullOrEmpty(trainingCode) ? "" : trainingCode;
+            trainingName = string.IsNullOrEmpty(trainingName) ? "" : trainingName;
+            month = string.IsNullOrEmpty(month) ? "" : month;
+            courseCode = string.IsNullOrEmpty(courseCode) ? "" : courseCode;
+            courseName = string.IsNullOrEmpty(courseName) ? "" : courseName;
+            userName = string.IsNullOrEmpty(userName) ? "" : userName;
+            gender = string.IsNullOrEmpty(gender) ? "" : gender;
+            email = string.IsNullOrEmpty(email) ? "" : email;
+
             var item = await (
                         from s in dbContext.Subscriptions
                         join t in dbContext.Trainings on s.TrainingId equals t.Id 
@@ -64,7 +73,7 @@ namespace CMS_Repository
                                && (gender == "" || s.Gender.ToLower() == gender.ToLower()) && (email == "" || s.Email.ToLower() == email.ToLower())
                         select new SubscriptionDto
                         {
-                            Id = t.Id,
+                            Id = s.Id,
                             TrainingObj = new TrainingDto
                             {
                                 Code = t.Code,
@@ -79,7 +88,7 @@ namespace CMS_Repository
                             UserId = s.UserId,
                             Email = s.Email,
                             Gender = s.Gender,
-                            Status = t.Status
+                            Status = s.Status
                         }).Skip((pageNumber - 1) * pageSize).Take(pageSize).ToListAsync();
             return item;
         }

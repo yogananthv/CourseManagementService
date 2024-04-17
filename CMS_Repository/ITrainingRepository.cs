@@ -7,11 +7,11 @@ namespace CMS_Repository
     {
         Task<List<TrainingDto>> GetAllAsync();
 
-        Task<TrainingDto?> GetByIdAsync(int id);
+        //Task<TrainingDto?> GetByIdAsync(int id);
 
         Task<TrainingDto> CreateAsync(TrainingDto training);
 
-        Task<TrainingDto?> UpdateAsync(int id, TrainingDto training);
+        Task<TrainingDto?> UpdateAsync(TrainingDto training);
 
     }
 }
