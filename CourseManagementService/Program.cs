@@ -18,8 +18,10 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddScoped<ICourseRepository, CourseRepository>();
 builder.Services.AddScoped<ITrainingRepository, TrainingRepository>();
 builder.Services.AddScoped<ISubscriptionRepository, SubscriptionRepository>();
+builder.Services.AddScoped<IUserAPIRepository, UserAPIRepository>();
 
 builder.Services.AddAutoMapper(typeof(AutoMapperProfiles));
+builder.Services.AddHttpClient();
 
 var app = builder.Build();
 

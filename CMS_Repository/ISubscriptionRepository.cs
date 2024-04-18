@@ -12,5 +12,7 @@ namespace CMS_Repository
 
         Task<SubscriptionDto> CreateAsync(SubscriptionDto sub);
 
+        Task<bool> CheckSubscription(SubscriptionDto subscriptionDto);
+
     }
 }

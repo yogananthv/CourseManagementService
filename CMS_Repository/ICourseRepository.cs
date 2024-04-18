@@ -1,13 +1,10 @@
-﻿using CMS_Model.Models;
+﻿using CMS_Model.DTO;
+using CMS_Model.Models;
 
 namespace CMS_Repository
 {
     public interface ICourseRepository
     {
-        Task<List<Course>> GetAllAsync();
-
-        Task<Course?> GetByIdAsync(int id);
-
-       
+        Task<List<CourseDto>> GetAllActiveCoursesAsync();
     }
 }

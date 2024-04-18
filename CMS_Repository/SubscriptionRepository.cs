@@ -25,6 +25,17 @@ namespace CMS_Repository
             return subscriptionDto;
         }
 
+        async Task<bool> ISubscriptionRepository.CheckSubscription(SubscriptionDto subscriptionDto)
+        {
+            var existingsub = await dbContext.Subscriptions.FirstOrDefaultAsync(x => x.UserId == subscriptionDto.UserId && x.Training.Month.ToLower() == subscriptionDto.TrainingObj.Month.ToLower());
+
+            if (existingsub != null && existingsub.UserId == subscriptionDto.UserId)
+            {
+                return true;
+            }
+            return false;
+        }
+
         async Task<List<SubscriptionDto>> ISubscriptionRepository.GetAllSubscriptionsAsync(int pageNumber = 1, int pageSize = 100, string trainingCode = "", string trainingName = "", string month = "")
         {
             trainingCode = string.IsNullOrEmpty(trainingCode) ? "" : trainingCode;

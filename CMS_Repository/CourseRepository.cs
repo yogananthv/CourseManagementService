@@ -1,5 +1,8 @@
 ﻿using CMS_DataAccess.Data;
+using CMS_Model.DTO;
 using CMS_Model.Models;
+using Microsoft.EntityFrameworkCore;
+using System.Reflection;
 
 namespace CMS_Repository
 {
@@ -11,17 +14,22 @@ namespace CMS_Repository
         {
             dbContext = _dbContext;
         }
-        
-        Task<List<Course>> ICourseRepository.GetAllAsync()
-        {
-            throw new NotImplementedException();
-        }
 
-        Task<Course?> ICourseRepository.GetByIdAsync(int id)
+        async Task<List<CourseDto>> ICourseRepository.GetAllActiveCoursesAsync()
         {
-            throw new NotImplementedException();
+            var item = await (
+                        from c in dbContext.Courses 
+                        where c.Status.ToLower() == "active"
+                        select new CourseDto
+                        {
+                           Code = c.Code,
+                           Description = c.Description,
+                           Name = c.Name,
+                           Status = c.Status,
+                           Id = c.Id,
+                           Title = c.Title
+                        }).ToListAsync();
+            return item;
         }
-
-       
     }
 }
