@@ -54,6 +54,35 @@ namespace CMSUnitTest
             Assert.AreEqual(listResult[0].Gender, okResult[0].Gender);
         }
 
-        
+        [Test]
+        public async Task GetSubscription_Returns_ErrorResult_With_ErrorMessage()
+        {
+
+            var input = new SubscriptionDtoSearchInput
+            {
+                PageNumber = 1,
+                PageSize = 1,
+                Email = "ahuja_veda@huels.example",
+                Gender = "male",
+                UserName = "Veda Ahuja",
+            };
+
+            // Arrange
+
+            var sampleServiceMock = new Mock<ISubscriptionRepository>();
+            sampleServiceMock.Setup(service => service.GetAllSubscriptionsDetailsAsync(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<string>(), It.IsAny<string>(),
+                    It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>())).Throws(new Exception("Something went wrong."));
+
+            var controller = new SubscriptionController(sampleServiceMock.Object);
+
+            // Act
+            var resultfinal = await controller.GetAllSubscriptionsDetails(input) as ObjectResult;
+
+            // Assert
+            Assert.IsInstanceOf<ObjectResult>(resultfinal);
+            Assert.AreEqual(resultfinal.Value, "Something went wrong.");
+        }
+
+
     }
 }
