@@ -3,13 +3,15 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.9.34723.18
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CourseManagementService", "CourseManagementService\CourseManagementService.csproj", "{1141F5F2-BDE6-4179-A9B8-07E446CF7CDD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CourseManagementService", "CourseManagementService\CourseManagementService.csproj", "{1141F5F2-BDE6-4179-A9B8-07E446CF7CDD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CMS_Model", "CMS_Model\CMS_Model.csproj", "{46C63000-024C-45F1-9994-3445598F6838}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CMS_Model", "CMS_Model\CMS_Model.csproj", "{46C63000-024C-45F1-9994-3445598F6838}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CMS_DataAccess", "CMS_DataAcess\CMS_DataAccess.csproj", "{57876132-F25E-4950-B44B-3E0E067A8B91}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CMS_DataAccess", "CMS_DataAcess\CMS_DataAccess.csproj", "{57876132-F25E-4950-B44B-3E0E067A8B91}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CMS_Repository", "CMS_Repository\CMS_Repository.csproj", "{025403AD-5F8D-4CB4-AEEB-F409860283D0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CMS_Repository", "CMS_Repository\CMS_Repository.csproj", "{025403AD-5F8D-4CB4-AEEB-F409860283D0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CMSUnitTest", "CMSUnitTest\CMSUnitTest.csproj", "{B52FB562-8B3F-492A-86D9-89738B4549F9}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +35,10 @@ Global
 		{025403AD-5F8D-4CB4-AEEB-F409860283D0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{025403AD-5F8D-4CB4-AEEB-F409860283D0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{025403AD-5F8D-4CB4-AEEB-F409860283D0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B52FB562-8B3F-492A-86D9-89738B4549F9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B52FB562-8B3F-492A-86D9-89738B4549F9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B52FB562-8B3F-492A-86D9-89738B4549F9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B52FB562-8B3F-492A-86D9-89738B4549F9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
