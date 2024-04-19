@@ -11,7 +11,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CMS_DataAccess", "CMS_DataA
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CMS_Repository", "CMS_Repository\CMS_Repository.csproj", "{025403AD-5F8D-4CB4-AEEB-F409860283D0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CMSUnitTest", "CMSUnitTest\CMSUnitTest.csproj", "{B52FB562-8B3F-492A-86D9-89738B4549F9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CMSUnitTest", "CMSUnitTest\CMSUnitTest.csproj", "{B52FB562-8B3F-492A-86D9-89738B4549F9}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

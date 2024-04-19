@@ -1,6 +1,7 @@
 ﻿using CMS_Model.DTO;
 using CMS_Repository;
 using Microsoft.AspNetCore.Mvc;
+using Serilog;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -22,8 +23,17 @@ namespace CourseManagementService.Controllers
         [Route("GetAllTrainings")]
         public async Task<IActionResult> GetAllTrainings()
         {
-            var result = await trainingRepository.GetAllAsync();
-            return Ok(result);
+            try
+            {
+                Log.Logger.Information("Getting training details");
+                var result = await trainingRepository.GetAllAsync();
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                Log.Logger.Error(ex.Message);
+                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
+            }
         }
 
 
@@ -32,8 +42,16 @@ namespace CourseManagementService.Controllers
         [Route("CreateTraining")]
         public async Task<IActionResult> CreateTraining([FromBody] TrainingDto trainingDto)
         {
-            var result = await trainingRepository.CreateAsync(trainingDto);
-            return CreatedAtAction("Training Created", result);
+            try
+            {
+                var result = await trainingRepository.CreateAsync(trainingDto);
+                return CreatedAtAction("Training Created", result);
+            }
+            catch (Exception ex)
+            {
+                Log.Logger.Error(ex.Message);
+                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
+            }
         }
 
         // PUT api/<TrainingController>/5
@@ -41,10 +59,16 @@ namespace CourseManagementService.Controllers
         [Route("UpdateTraining")]
         public async Task<IActionResult> UpdateTraining([FromBody] TrainingDto trainingDto)
         {
-            var result = await trainingRepository.UpdateAsync(trainingDto);
-            return Ok(result);
+            try
+            {
+                var result = await trainingRepository.UpdateAsync(trainingDto);
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                Log.Logger.Error(ex.Message);
+                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
+            }
         }
-
-        
     }
 }

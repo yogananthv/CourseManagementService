@@ -1,5 +1,6 @@
 ﻿using CMS_Repository;
 using Microsoft.AspNetCore.Mvc;
+using Serilog;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -20,8 +21,17 @@ namespace CourseManagementService.Controllers
         [Route("getcourses")]
         public async Task<IActionResult> GetCourses()
         {
-            var result = await courseRepository.GetAllActiveCoursesAsync();
-            return Ok(result);
+            try
+            {
+                Log.Logger.Information("Getting Course details");
+                var result = await courseRepository.GetAllActiveCoursesAsync();
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                Log.Logger.Error(ex.Message);
+                return StatusCode(StatusCodes.Status500InternalServerError,ex.Message);
+            }
         }
     }
 }

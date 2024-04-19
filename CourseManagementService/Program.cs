@@ -2,8 +2,16 @@ using CMS_DataAccess.Data;
 using CMS_Repository;
 using CMS_Repository.Mappings;
 using Microsoft.EntityFrameworkCore;
+using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Host.UseSerilog((HostBuilderContext context, 
+    IServiceProvider serviceProvider, 
+    LoggerConfiguration loggerConfiguration) =>
+{
+    loggerConfiguration.ReadFrom.Configuration(context.Configuration).ReadFrom.Services(serviceProvider);
+});
 
 // Add services to the container.
 
