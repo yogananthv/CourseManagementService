@@ -9,6 +9,14 @@ namespace CMSUnitTest
     [TestFixture]
     public class RepositoryControllerTest
     {
+        private Mock<ISubscriptionRepository> sampleServiceMock;
+
+        [SetUp]
+        public void Setup()
+        {
+            sampleServiceMock = new Mock<ISubscriptionRepository>();
+        }
+
         [Test]
         public async Task GetSubscription_Returns_OkResult_With_SubscriptionDto()
         {
@@ -36,7 +44,6 @@ namespace CMSUnitTest
 
             // Arrange
 
-            var sampleServiceMock = new Mock<ISubscriptionRepository>();
             sampleServiceMock.Setup(service => service.GetAllSubscriptionsDetailsAsync(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<string>(), It.IsAny<string>(),
                     It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>())).Returns(Task.FromResult(listResult));
 
@@ -69,7 +76,6 @@ namespace CMSUnitTest
 
             // Arrange
 
-            var sampleServiceMock = new Mock<ISubscriptionRepository>();
             sampleServiceMock.Setup(service => service.GetAllSubscriptionsDetailsAsync(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<string>(), It.IsAny<string>(),
                     It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>())).Throws(new Exception("Something went wrong."));
 
