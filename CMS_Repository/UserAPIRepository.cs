@@ -24,10 +24,11 @@ namespace CMS_Repository
             {
                 {"status", "active"}
             };
-
+            // Query parameters
             var queryString = string.Join("&", queryParameters
                 .Select(x => $"{Uri.EscapeDataString(x.Key)}={Uri.EscapeDataString(x.Value)}"));
 
+            // Get the api url based on company from app settings file
             var apiURL = configuration.GetValue<string>(companyName);
             
             var httpClient = clientFactory.CreateClient();

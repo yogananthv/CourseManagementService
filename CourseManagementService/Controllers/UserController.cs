@@ -17,6 +17,11 @@ namespace CourseManagementService.Controllers
         }
 
         // GET: api/<UserController>
+        /// <summary>
+        /// Get the user details for the company using third party API
+        /// </summary>
+        /// <param name="CompanyName"></param>
+        /// <returns>User details</returns>
         [HttpGet]
         [Route("getuserdetails")]
         public async Task<IActionResult> Getuserdetails(string CompanyName)

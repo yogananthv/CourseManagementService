@@ -22,6 +22,7 @@ namespace CMS_Repository
             var subscription = mapper.Map<Subscription>(subscriptionDto);
             await dbContext.Subscriptions.AddAsync(subscription);
             await dbContext.SaveChangesAsync();
+            subscriptionDto.Id = subscription.Id;
             return subscriptionDto;
         }
 
@@ -45,6 +46,7 @@ namespace CMS_Repository
             var item = await(
                         from s in dbContext.Subscriptions
                         join t in dbContext.Trainings on s.TrainingId equals t.Id
+                        // filter based on the given input
                         where (trainingCode == "" || t.Code.ToLower() == trainingCode.ToLower()) && (trainingName == "" || t.Name.ToLower() == trainingName.ToLower()) && (month == "" || t.Month.ToLower() == month.ToLower())
                         orderby (s.Id)
                         select new SubscriptionDto
@@ -57,7 +59,7 @@ namespace CMS_Repository
                                 Month = t.Month
                             },
                             Status = s.Status
-                        }).Skip((pageNumber-1) * pageSize).Take(pageSize).ToListAsync();
+                        }).Skip((pageNumber-1) * pageSize).Take(pageSize).ToListAsync(); // Pagination
 
 
             return item;
@@ -79,6 +81,7 @@ namespace CMS_Repository
                         from s in dbContext.Subscriptions
                         join t in dbContext.Trainings on s.TrainingId equals t.Id 
                         join c in dbContext.Courses on t.CourseId equals c.Id
+                        // filter based on the given input
                         where (trainingCode == "" || t.Code.ToLower() == trainingCode.ToLower()) && (trainingName == "" || t.Name.ToLower() == trainingName.ToLower()) && (month == "" || t.Month.ToLower() == month.ToLower())
                                && (courseCode == "" || c.Code.ToLower() == courseCode.ToLower()) && (courseName == "" || c.Name.ToLower() == courseName.ToLower()) && (userName == "" || s.UserName.ToLower() == userName.ToLower())
                                && (gender == "" || s.Gender.ToLower() == gender.ToLower()) && (email == "" || s.Email.ToLower() == email.ToLower())
@@ -101,6 +104,7 @@ namespace CMS_Repository
                             Gender = s.Gender,
                             Status = s.Status
                         }).Skip((pageNumber - 1) * pageSize).Take(pageSize).ToListAsync();
+                        // Pagination
             return item;
         }
     }

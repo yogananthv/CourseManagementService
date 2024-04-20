@@ -2,8 +2,6 @@
 using Microsoft.AspNetCore.Mvc;
 using Serilog;
 
-// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-
 namespace CourseManagementService.Controllers
 {
     [Route("api/[controller]")]
@@ -17,12 +15,17 @@ namespace CourseManagementService.Controllers
         }
 
         // GET: api/<courseController>
+        /// <summary>
+        /// To get the active courses 
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         [Route("getcourses")]
         public async Task<IActionResult> GetCourses()
         {
             try
             {
+                // Information logged to text file using Serilog
                 Log.Logger.Information("Getting Course details");
                 var result = await courseRepository.GetAllActiveCoursesAsync();
                 return Ok(result);

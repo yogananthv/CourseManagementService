@@ -12,13 +12,7 @@ namespace CMS_DataAccess.Data
 
         public DbSet<Training> Trainings { get; set; }
 
-        //public DbSet<User> Users { get; set; }
-
         public DbSet<Subscription> Subscriptions { get; set; }
 
-        //protected override void OnModelCreating(ModelBuilder modelBuilder)
-        //{
-        //    modelBuilder.Entity<User>().HasKey(user => new { user.UserId, user.Company });
-        //}
     }
 }

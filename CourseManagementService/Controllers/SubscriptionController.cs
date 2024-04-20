@@ -4,8 +4,6 @@ using Microsoft.AspNetCore.Mvc;
 using Serilog;
 using System.Net;
 
-// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-
 namespace CourseManagementService.Controllers
 {
     [Route("api/[controller]")]
@@ -20,6 +18,11 @@ namespace CourseManagementService.Controllers
         }
 
         // GET: api/<SubscriptionController>
+        /// <summary>
+        /// Get all subscriptions for the search & Pagination inputs
+        /// </summary>
+        /// <param name="subInput"></param>
+        /// <returns>List of subscriptions</returns>
         [HttpGet]
         [Route("GetAllSubscriptions")]
         public async Task<IActionResult> GetAllSubscriptions([FromQuery]SubscriptionDtoSearchInput subInput)
@@ -37,6 +40,11 @@ namespace CourseManagementService.Controllers
         }
 
         // GET: api/<SubscriptionController>
+        /// <summary>
+        /// Get all subscriptions details for the search & Pagination inputs
+        /// </summary>
+        /// <param name="subInput"></param>
+        /// <returns>List of subscription details</returns>
         [HttpGet]
         [Route("GetAllSubscriptionsDetails")]
         public async Task<IActionResult> GetAllSubscriptionsDetails([FromQuery]SubscriptionDtoSearchInput subInput)
@@ -55,12 +63,18 @@ namespace CourseManagementService.Controllers
         }
 
         // POST api/<SubscriptionController>
+        /// <summary>
+        /// Create subscription with the given input
+        /// </summary>
+        /// <param name="subDto"></param>
+        /// <returns>Created subcription</returns>
         [HttpPost]
         [Route("CreateSubscription")]
         public async Task<IActionResult> CreateSubscription([FromBody] SubscriptionDto subDto)
         {
             try
             {
+                // Validate whether user already subscribed to any trainings in the same month.
                 var availability = await subscriptionRepository.CheckSubscription(subDto);
                 if (availability)
                 {
@@ -71,7 +85,7 @@ namespace CourseManagementService.Controllers
                     return BadRequest(response);
                 }
                 var result = await subscriptionRepository.CreateAsync(subDto);
-                return Ok(result);
+                return StatusCode(StatusCodes.Status201Created, result);
             }
             catch (Exception ex)
             {

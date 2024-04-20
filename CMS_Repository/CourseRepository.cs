@@ -1,8 +1,6 @@
 ﻿using CMS_DataAccess.Data;
 using CMS_Model.DTO;
-using CMS_Model.Models;
 using Microsoft.EntityFrameworkCore;
-using System.Reflection;
 
 namespace CMS_Repository
 {
@@ -19,7 +17,7 @@ namespace CMS_Repository
         {
             var item = await (
                         from c in dbContext.Courses 
-                        where c.Status.ToLower() == "active"
+                        where c.Status.ToLower() == "active" // get only the active courses
                         select new CourseDto
                         {
                            Code = c.Code,

@@ -2,8 +2,7 @@
 using CMS_Repository;
 using Microsoft.AspNetCore.Mvc;
 using Serilog;
-
-// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+using System.Net;
 
 namespace CourseManagementService.Controllers
 {
@@ -19,6 +18,10 @@ namespace CourseManagementService.Controllers
         }
        
         // GET: api/<TrainingController>
+        /// <summary>
+        /// Get all trainings
+        /// </summary>
+        /// <returns>List of trainings</returns>
         [HttpGet]
         [Route("GetAllTrainings")]
         public async Task<IActionResult> GetAllTrainings()
@@ -38,6 +41,11 @@ namespace CourseManagementService.Controllers
 
 
         // POST api/<TrainingController>
+        /// <summary>
+        /// To create training
+        /// </summary>
+        /// <param name="trainingDto"></param>
+        /// <returns>Created training with newly created Id</returns>
         [HttpPost]
         [Route("CreateTraining")]
         public async Task<IActionResult> CreateTraining([FromBody] TrainingDto trainingDto)
@@ -45,7 +53,7 @@ namespace CourseManagementService.Controllers
             try
             {
                 var result = await trainingRepository.CreateAsync(trainingDto);
-                return CreatedAtAction("Training Created", result);
+                return StatusCode(StatusCodes.Status201Created, result);
             }
             catch (Exception ex)
             {
@@ -54,7 +62,12 @@ namespace CourseManagementService.Controllers
             }
         }
 
-        // PUT api/<TrainingController>/5
+        // PUT api/<TrainingController>
+        /// <summary>
+        /// Update training
+        /// </summary>
+        /// <param name="trainingDto"></param>
+        /// <returns>Updated training model</returns>
         [HttpPut]
         [Route("UpdateTraining")]
         public async Task<IActionResult> UpdateTraining([FromBody] TrainingDto trainingDto)
